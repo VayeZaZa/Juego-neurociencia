@@ -271,10 +271,48 @@ public void MostrarRespuestaElegida(int opcion)
     void MostrarConvergenciaActual()
     {
         if (coroutineActual != null)
-            StopCoroutine(coroutineActual);
+        StopCoroutine(coroutineActual);
 
         coroutineActual = StartCoroutine(
             EscribirTexto(dialogosConvergencia[indiceConvergencia])
         );
     }
+
+    // Added method to allow skipping the dialogue and showing the response panel
+    public void SkipDialogo()
+    {
+        if (coroutineActual != null)
+            StopCoroutine(coroutineActual);
+
+        escribiendo = false;
+        panelDialogo.SetActive(false);
+
+        if (panelRespuestas != null)
+            panelRespuestas.SetActive(true);
+    }
+
+    // Added method to skip everything and go directly to decision panel
+  public void SkipTodo()
+{
+    if (coroutineActual != null)
+        StopCoroutine(coroutineActual);
+
+    escribiendo = false;
+    mostrandoRespuesta = false;
+    mostrandoConvergencia = false;
+
+    if (panelDialogo != null) panelDialogo.SetActive(false);
+    if (panelRespuestas != null) panelRespuestas.SetActive(false);
+    if (botonConfirmar != null) botonConfirmar.SetActive(false);
+
+    if (panelDecision != null)
+    {
+        panelDecision.SetActive(true);
+        Debug.Log("panelDecision activado: " + panelDecision.name);
+    }
+    else
+    {
+        Debug.Log("ERROR: panelDecision es NULL");
+    }
+}
 }

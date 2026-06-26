@@ -44,4 +44,11 @@ void Start()
             dialogoBienvenida.MostrarRespuestaElegida(respuestaSeleccionada);
         }
     }
+
+    // Added method to skip response and confirm automatically
+    public void SkipRespuesta()
+    {
+        SeleccionarRespuesta(1);
+        ConfirmarRespuesta();
+    }
 }
