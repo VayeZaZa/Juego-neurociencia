@@ -18,16 +18,35 @@ public class MovimientoSimple : MonoBehaviour
     public Animator animAvatar;
     public Animator animJugador;
 
-        public GameObject panelDecision;
-        public PresentacionCapitulo tituloCap;
-
-        public DialogoRetirada dialogoRetirada;
+    public GameObject panelDecision;
+    public PresentacionCapitulo tituloCap;
+    public DialogoRetirada dialogoRetirada;
 
     public float velocidad = 2f;
     public float velocidadGiro = 120f;
 
     private bool mover = false;
     private bool girando = false;
+
+    void Start()
+    {
+        int avatar = PlayerPrefs.GetInt("Avatar", 1);
+        jugadorActivo = avatar == 1 ? hombre : mujer;
+
+        if (jugadorActivo != null)
+        {
+            animJugador = jugadorActivo.GetComponent<Animator>();
+            Debug.Log("Jugador activo: " + jugadorActivo.name);
+        }
+
+        if (PlayerPrefs.GetInt("EstadoRetirada", 0) == 1)
+        {
+            RestaurarEstadoPuerta();
+
+            if (dialogoRetirada != null)
+                dialogoRetirada.DialogoDespuesDelMinijuego();
+        }
+    }
 
     public void Seguir()
     {
@@ -42,10 +61,10 @@ public class MovimientoSimple : MonoBehaviour
 
         mover = true;
         girando = false;
-        // ✅ Activa el título cuando empieza el movimiento
+
         if (tituloCap != null)
         {
-            tituloCap.gameObject.SetActive(false);  // <-- esto es lo que faltaba
+            tituloCap.gameObject.SetActive(false);
             tituloCap.gameObject.SetActive(true);
         }
 
@@ -64,21 +83,8 @@ public class MovimientoSimple : MonoBehaviour
         return mover;
     }
 
-    void Start()
-    {
-        int avatar = PlayerPrefs.GetInt("Avatar", 1);
-        jugadorActivo = avatar == 1 ? hombre : mujer;
-
-        if (jugadorActivo != null)
-        {
-            animJugador = jugadorActivo.GetComponent<Animator>();
-            Debug.Log("Jugador activo: " + jugadorActivo.name);
-        }
-    }
-
     void Update()
     {
-        // Giro final del clínico
         if (girando && avatarClinico != null && jugadorActivo != null)
         {
             Vector3 dir = jugadorActivo.transform.position - avatarClinico.position;
@@ -109,7 +115,6 @@ public class MovimientoSimple : MonoBehaviour
         if (!mover)
             return;
 
-        // Movimiento avatar clínico
         if (avatarClinico != null)
         {
             avatarClinico.position = Vector3.MoveTowards(
@@ -119,7 +124,6 @@ public class MovimientoSimple : MonoBehaviour
             );
         }
 
-        // Movimiento jugador
         if (jugadorActivo != null)
         {
             jugadorActivo.transform.position = Vector3.MoveTowards(
@@ -129,7 +133,6 @@ public class MovimientoSimple : MonoBehaviour
             );
         }
 
-        // Llegada
         bool clinicoLlego =
             avatarClinico != null &&
             Vector3.Distance(avatarClinico.position, puntoAvatar.position) < 0.05f;
@@ -154,14 +157,11 @@ public class MovimientoSimple : MonoBehaviour
             girando = true;
 
             if (dialogoRetirada != null)
-            {
                 dialogoRetirada.IniciarDialogo();
-            }
 
             Debug.Log("Llegaron a la puerta de la Retirada");
         }
 
-        // Cámara
         if (camaraPrincipal != null && puntoCamara != null)
         {
             camaraPrincipal.transform.position = Vector3.MoveTowards(
@@ -178,7 +178,31 @@ public class MovimientoSimple : MonoBehaviour
         }
     }
 
-    public void SkipMovimiento() 
+    void RestaurarEstadoPuerta()
+    {
+        mover = false;
+        girando = false;
+
+        if (avatarClinico != null)
+            avatarClinico.LookAt(jugadorActivo.transform);
+
+        if (jugadorActivo != null)
+            jugadorActivo.transform.position = puntoJugador.position;
+
+        if (animAvatar != null)
+            animAvatar.Play("Fishing Idle");
+
+        if (animJugador != null)
+            animJugador.SetBool("Walking", false);
+
+        if (camaraPrincipal != null && puntoCamara != null)
+        {
+            camaraPrincipal.transform.position = puntoCamara.position;
+            camaraPrincipal.transform.rotation = puntoCamara.rotation;
+        }
+    }
+
+    public void SkipMovimiento()
     {
         mover = false;
 

@@ -38,6 +38,16 @@ private string textoCompletoActual;
 
 void Start()
 {
+    // Si venimos del minijuego saltamos el dialogo de bienvenida
+    if (PlayerPrefs.GetInt("EstadoRetirada", 0) == 1)
+    {
+        if (panelDialogo != null) panelDialogo.SetActive(false);
+        if (panelRespuestas != null) panelRespuestas.SetActive(false);
+        if (botonConfirmar != null) botonConfirmar.SetActive(false);
+        if (panelDecision != null) panelDecision.SetActive(false);
+        return; // ← sale del Start sin iniciar nada
+    }
+    
     string nombre = PlayerPrefs.GetString("NombreJugador", "Explorador");
 
     dialogos = new string[]
