@@ -6,9 +6,12 @@ public class PuertaController : MonoBehaviour
     public GameObject puertaCerrada;
     public GameObject puertaAbierta;
 
-    void Start()
+    [Header("¿Qué puerta es esta?")]
+    public string claveEstado = "EstadoRetirada"; // cambia en el Inspector
+
+    void Awake()
     {
-        int completado = PlayerPrefs.GetInt("EstadoRetirada", 0);
+        int completado = PlayerPrefs.GetInt(claveEstado, 0);
 
         if (completado == 1)
         {

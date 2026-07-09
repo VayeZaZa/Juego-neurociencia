@@ -676,6 +676,7 @@ GameObject:
   - component: {fileID: 544029604}
   - component: {fileID: 544029603}
   - component: {fileID: 544029602}
+  - component: {fileID: 544029605}
   m_Layer: 5
   m_Name: Transicion
   m_TagString: Untagged
@@ -754,6 +755,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 544029600}
   m_CullTransparentMesh: 1
+--- !u!225 &544029605
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 544029600}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &987847958
 GameObject:
   m_ObjectHideFlags: 0

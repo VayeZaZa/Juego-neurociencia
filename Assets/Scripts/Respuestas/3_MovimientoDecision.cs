@@ -39,13 +39,20 @@ public class MovimientoSimple : MonoBehaviour
             Debug.Log("Jugador activo: " + jugadorActivo.name);
         }
 
+               // Comprobamos si el minijuego de Retirada fue completado
         if (PlayerPrefs.GetInt("EstadoRetirada", 0) == 1)
         {
+            // Siempre restauramos físicamente la puerta/posición del jugador para que el escenario esté correcto
             RestaurarEstadoPuerta();
 
-            if (dialogoRetirada != null)
-                dialogoRetirada.DialogoDespuesDelMinijuego();
+            // ⚠️ SOLO reproducimos el diálogo de "Buen trabajo" si NO hemos completado el minijuego de Eco Cambio aún
+            if (PlayerPrefs.GetInt("EstadoEcoCambio", 0) == 0)
+            {
+                if (dialogoRetirada != null)
+                    dialogoRetirada.DialogoDespuesDelMinijuego();
+            }
         }
+        
     }
 
     public void Seguir()

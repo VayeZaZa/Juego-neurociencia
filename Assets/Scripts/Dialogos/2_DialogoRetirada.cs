@@ -18,9 +18,11 @@ public class DialogoRetirada : MonoBehaviour
     public GameObject check3;
     public GameObject check4;
     public GameObject panelRespuestas2;
+    public GameObject panelDecision2;
     public GameObject check1_2;
     public GameObject check2_2;
     public GameObject check3_2;
+    public MovimientoEcoCambio movimientoEcoCambio;
 
     [Header("Introduccion Minijuego")]
     public GameObject panelIntroduccion;
@@ -39,9 +41,10 @@ public class DialogoRetirada : MonoBehaviour
     private int respuestaSeleccionada = 0;
     private bool segundaFase = false;
     private bool finalStage = false;
-    private bool postMinijuego = false; // ← NUEVO
-    private bool aplausoHecho = false; // ← APLAUDIR DESPUES DE MINIJUEGO
+    private bool postMinijuego = false;
+    private bool aplausoHecho = false;
     private int respuestaSeleccionada2 = 0;
+    private bool recorridoConfirmado = false; // ← NUEVO
 
     void Start()
     {
@@ -60,6 +63,7 @@ public class DialogoRetirada : MonoBehaviour
         if (panelDialogo != null) panelDialogo.SetActive(false);
         if (panelRespuestas != null) panelRespuestas.SetActive(false);
         if (panelRespuestas2 != null) panelRespuestas2.SetActive(false);
+        if (panelDecision2 != null) panelDecision2.SetActive(false);
         if (panelIntroduccion != null) panelIntroduccion.SetActive(false);
         if (panelFade != null) panelFade.gameObject.SetActive(false);
     }
@@ -102,11 +106,12 @@ public class DialogoRetirada : MonoBehaviour
         {
             if (postMinijuego)
             {
-                // Aquí termina el dialogo post minijuego
                 panelDialogo.SetActive(false);
-                PlayerPrefs.DeleteKey("EstadoRetirada");
-                PlayerPrefs.Save();
-                // Aquí puedes cargar la siguiente escena o lo que necesites
+
+                if (panelDecision2 != null && !recorridoConfirmado) // ← CONDICIÓN NUEVA
+                    panelDecision2.SetActive(true);
+
+                return;
             }
             else if (!segundaFase && !finalStage)
             {
@@ -159,53 +164,49 @@ public class DialogoRetirada : MonoBehaviour
     }
 
     IEnumerator EscribirTexto(string texto)
-{
-    escribiendo = true;
-    textoCompletoActual = texto;
-
-    if (avatarAnimator != null)
     {
-        // 👏 Solo la primera vez después del minijuego
-        if (postMinijuego && !aplausoHecho)
+        escribiendo = true;
+        textoCompletoActual = texto;
+
+        if (avatarAnimator != null)
         {
-            aplausoHecho = true;
-
-            avatarAnimator.Play("Clapping");
-
-            // Dejamos que aplauda un poquito
-            yield return new WaitForSeconds(0.8f);
-
-            avatarAnimator.SetBool("Hablando", true);
+            if (postMinijuego && !aplausoHecho)
+            {
+                aplausoHecho = true;
+                avatarAnimator.Play("Clapping");
+                yield return new WaitForSeconds(0.8f);
+                avatarAnimator.SetBool("Hablando", true);
+            }
+            else
+            {
+                avatarAnimator.SetBool("Hablando", true);
+            }
         }
-        else
+
+        textoDialogo.text = "";
+
+        foreach (char letra in texto)
         {
-            avatarAnimator.SetBool("Hablando", true);
+            if (!escribiendo)
+            {
+                textoDialogo.text = textoCompletoActual;
+
+                if (avatarAnimator != null)
+                    avatarAnimator.SetBool("Hablando", false);
+
+                yield break;
+            }
+
+            textoDialogo.text += letra;
+            yield return new WaitForSeconds(velocidadEscritura);
         }
+
+        escribiendo = false;
+
+        if (avatarAnimator != null)
+            avatarAnimator.SetBool("Hablando", false);
     }
 
-    textoDialogo.text = "";
-
-    foreach (char letra in texto)
-    {
-        if (!escribiendo)
-        {
-            textoDialogo.text = textoCompletoActual;
-
-            if (avatarAnimator != null)
-                avatarAnimator.SetBool("Hablando", false);
-
-            yield break;
-        }
-
-        textoDialogo.text += letra;
-        yield return new WaitForSeconds(velocidadEscritura);
-    }
-
-    escribiendo = false;
-
-    if (avatarAnimator != null)
-        avatarAnimator.SetBool("Hablando", false);
-}
     public void SeleccionarRespuesta(int opcion)
     {
         respuestaSeleccionada = opcion;
@@ -273,8 +274,8 @@ public class DialogoRetirada : MonoBehaviour
         {
             respuestaPersonalizada = new string[]
             {
-                "Recuerda que no estás pasando por esto sin compañía.",
-                "Y a pesar de todo, sigues adelante. 😊"
+                "Alejarse también es una manera de intentar cuidarse.",
+                "Y a pesar de eso, sigues adelante. 😊"
             };
         }
         else if (respuestaSeleccionada2 == 2)
@@ -298,7 +299,6 @@ public class DialogoRetirada : MonoBehaviour
         {
             respuestaPersonalizada[0],
             respuestaPersonalizada[1],
-            "Significa mucho que estés aquí.",
             "No voy a prometerte magia... Pero quiero mostrarte algo distinto.",
             "Detrás de esta puerta encontraremos pensamientos.",
             "Los que aparecen justo cuando queremos retirarnos.",
@@ -359,7 +359,6 @@ public class DialogoRetirada : MonoBehaviour
             panelFade.color = color;
         }
 
-        // Guarda que el minijuego fue completado ← IMPORTANTE
         PlayerPrefs.SetInt("EstadoRetirada", 1);
         PlayerPrefs.Save();
 
@@ -367,30 +366,52 @@ public class DialogoRetirada : MonoBehaviour
         SceneManager.LoadScene("03_MinijuegoRetirada");
     }
 
-    // ← MÉTODO NUEVO
     public void DialogoDespuesDelMinijuego()
-{
-    indice = 0;
-
-    finalStage = false;
-    segundaFase = false;
-
-    postMinijuego = true;
-    aplausoHecho = false;
-
-    dialogos = new string[]
     {
-        "¡Excelente trabajo!",
-        "Los pensamientos siguen existiendo...",
-        "Pero ahora ya no bloquean el camino.",
-        "La Puerta de la Retirada está abierta.",
-        "Has conseguido la Llave de la Retirada.",
-        "Ahora podemos seguir adelante. 😊"
-    };
+        indice = 0;
+        finalStage = false;
+        segundaFase = false;
+        postMinijuego = true;
+        recorridoConfirmado = false; // ← resetear por si acaso
 
-    if (panelDialogo != null)
-        panelDialogo.SetActive(true);
+        string nombre = PlayerPrefs.GetString("NombreJugador", "Explorador");
 
-    MostrarDialogoActual();
-}
+        dialogos = new string[]
+        {
+            "¡Buen trabajo, " + nombre + "! 😊",
+            "¡Has logrado abrir la puerta!",
+            "Ahora esos pensamientos ya no son quienes cierran el camino.",
+            "Pero el recorrido no termina aquí...",
+            "¡Sigueme a la siguiente puerta! 😊",
+        };
+
+        if (panelDialogo != null)
+            panelDialogo.SetActive(true);
+
+        MostrarDialogoActual();
+    }
+
+    public void ContinuarRecorrido()
+    {
+        recorridoConfirmado = true; // ← NUEVO
+
+        if (panelDecision2 != null)
+            panelDecision2.SetActive(false);
+
+        PlayerPrefs.SetInt("Checkpoint", 3);
+        PlayerPrefs.Save();
+
+        if (movimientoEcoCambio != null)
+            movimientoEcoCambio.Seguir();
+    }
+
+    public void Abandonar2()
+    {
+        Debug.Log("Abandonar recorrido");
+
+        PlayerPrefs.SetInt("Checkpoint", 2);
+        PlayerPrefs.Save();
+
+        SceneManager.LoadScene("00_MenuJuego");
+    }
 }

@@ -17,6 +17,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/03_MinijuegoRetirada.unity
     guid: 74288f765e928a241a0dcf9aedb61383
+  - enabled: 1
+    path: Assets/Scenes/04_MinijuegoEcoCambio.unity
+    guid: 5031fe7deea04294cb23f5679906f118
+  - enabled: 1
+    path: Assets/Scenes/05_MinijuegoCompromiso.unity
+    guid: bdcd9bc476dbe9c45b04da4a85041e22
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

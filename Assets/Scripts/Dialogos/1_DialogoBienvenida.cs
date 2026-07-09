@@ -59,7 +59,7 @@ void Start()
         "Este es un espacio para comprender mejor lo que ocurre cuando vivimos con dolor.",
         "Estás aquí para explorar y comprender a tu propio ritmo.",
         "Antes de comenzar...",
-        "¡Quiero hacerte una pregunta! Prometo que será rápida 😊",
+        "¡Quiero hacerte una pregunta! 😊",
         "¿Cómo llegas hoy aquí?"
     };
 

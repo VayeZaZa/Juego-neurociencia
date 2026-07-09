@@ -2279,7 +2279,7 @@ MonoBehaviour:
   pensamientos: {fileID: 711152198}
   corazones: {fileID: 1279877223}
   contador: {fileID: 623612045}
-  velocidadFadeOut: 2
+  velocidadFadeOut: 1
   velocidadFadeIn: 2.5
 --- !u!4 &1101190175
 Transform:
