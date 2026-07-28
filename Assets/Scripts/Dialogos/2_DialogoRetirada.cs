@@ -13,11 +13,13 @@ public class DialogoRetirada : MonoBehaviour
     public TMP_Text textoDialogo;
     public GameObject panelDialogo;
     public GameObject panelRespuestas;
+    public GameObject botonConfirmar;      // 👈 NUEVO
     public GameObject check1;
     public GameObject check2;
     public GameObject check3;
     public GameObject check4;
     public GameObject panelRespuestas2;
+    public GameObject botonConfirmar2;     // 👈 NUEVO
     public GameObject panelDecision2;
     public GameObject check1_2;
     public GameObject check2_2;
@@ -44,7 +46,7 @@ public class DialogoRetirada : MonoBehaviour
     private bool postMinijuego = false;
     private bool aplausoHecho = false;
     private int respuestaSeleccionada2 = 0;
-    private bool recorridoConfirmado = false; // ← NUEVO
+    private bool recorridoConfirmado = false;
 
     void Start()
     {
@@ -62,7 +64,9 @@ public class DialogoRetirada : MonoBehaviour
 
         if (panelDialogo != null) panelDialogo.SetActive(false);
         if (panelRespuestas != null) panelRespuestas.SetActive(false);
+        if (botonConfirmar != null) botonConfirmar.SetActive(false);       // 👈 NUEVO
         if (panelRespuestas2 != null) panelRespuestas2.SetActive(false);
+        if (botonConfirmar2 != null) botonConfirmar2.SetActive(false);     // 👈 NUEVO
         if (panelDecision2 != null) panelDecision2.SetActive(false);
         if (panelIntroduccion != null) panelIntroduccion.SetActive(false);
         if (panelFade != null) panelFade.gameObject.SetActive(false);
@@ -108,7 +112,7 @@ public class DialogoRetirada : MonoBehaviour
             {
                 panelDialogo.SetActive(false);
 
-                if (panelDecision2 != null && !recorridoConfirmado) // ← CONDICIÓN NUEVA
+                if (panelDecision2 != null && !recorridoConfirmado)
                     panelDecision2.SetActive(true);
 
                 return;
@@ -118,6 +122,8 @@ public class DialogoRetirada : MonoBehaviour
                 panelDialogo.SetActive(false);
                 if (panelRespuestas != null)
                     panelRespuestas.SetActive(true);
+                if (botonConfirmar != null)
+                    botonConfirmar.SetActive(false);   // 👈 NUEVO
             }
             else if (segundaFase && !finalStage)
             {
@@ -131,6 +137,8 @@ public class DialogoRetirada : MonoBehaviour
 
                 if (panelRespuestas2 != null)
                     panelRespuestas2.SetActive(true);
+                if (botonConfirmar2 != null)
+                    botonConfirmar2.SetActive(false);   // 👈 NUEVO
             }
             else if (finalStage)
             {
@@ -220,6 +228,9 @@ public class DialogoRetirada : MonoBehaviour
         if (opcion == 2 && check2 != null) check2.SetActive(true);
         if (opcion == 3 && check3 != null) check3.SetActive(true);
         if (opcion == 4 && check4 != null) check4.SetActive(true);
+
+        if (botonConfirmar != null)
+            botonConfirmar.SetActive(true);   // 👈 NUEVO
     }
 
     public void ConfirmarRespuesta()
@@ -256,6 +267,9 @@ public class DialogoRetirada : MonoBehaviour
         if (opcion == 1 && check1_2 != null) check1_2.SetActive(true);
         if (opcion == 2 && check2_2 != null) check2_2.SetActive(true);
         if (opcion == 3 && check3_2 != null) check3_2.SetActive(true);
+
+        if (botonConfirmar2 != null)
+            botonConfirmar2.SetActive(true);   // 👈 NUEVO
     }
 
     public void ConfirmarRespuesta2()
@@ -372,7 +386,7 @@ public class DialogoRetirada : MonoBehaviour
         finalStage = false;
         segundaFase = false;
         postMinijuego = true;
-        recorridoConfirmado = false; // ← resetear por si acaso
+        recorridoConfirmado = false;
 
         string nombre = PlayerPrefs.GetString("NombreJugador", "Explorador");
 
@@ -393,7 +407,7 @@ public class DialogoRetirada : MonoBehaviour
 
     public void ContinuarRecorrido()
     {
-        recorridoConfirmado = true; // ← NUEVO
+        recorridoConfirmado = true;
 
         if (panelDecision2 != null)
             panelDecision2.SetActive(false);

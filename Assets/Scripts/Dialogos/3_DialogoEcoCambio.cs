@@ -13,6 +13,7 @@ public class DialogoEcoCambio : MonoBehaviour
     public GameObject panelDialogo;
     public TMP_Text textoDialogo;
     public GameObject panelRespuestas;
+    public GameObject botonConfirmar;   // 👈 NUEVO
     public GameObject check2_1;
     public GameObject check2_2;
 
@@ -36,7 +37,7 @@ public class DialogoEcoCambio : MonoBehaviour
     private int respuestaSeleccionada = 0;
     private bool mostrandoRespuesta = false;
     private bool introduccionMinijuego = false;
-    private bool dialogoPostMinijuego = false;  // ← NUEVO
+    private bool dialogoPostMinijuego = false;
     private bool aplausoHecho;
 
     void Start()
@@ -52,6 +53,7 @@ public class DialogoEcoCambio : MonoBehaviour
 
         panelDialogo.SetActive(false);
         panelRespuestas.SetActive(false);
+        if (botonConfirmar != null) botonConfirmar.SetActive(false);   // 👈 NUEVO
         check2_1.SetActive(false);
         check2_2.SetActive(false);
 
@@ -87,29 +89,29 @@ public class DialogoEcoCambio : MonoBehaviour
         MostrarDialogoActual();
     }
 
-  public void DialogoDespuesDelMinijuego()
-{
-    indice = 0;
-    mostrandoRespuesta = true;
-    introduccionMinijuego = true;
-    dialogoPostMinijuego = true;
-    aplausoHecho = false;
-
-    string nombre = PlayerPrefs.GetString("NombreJugador", "Explorador");
-
-    dialogos = new string[]
+    public void DialogoDespuesDelMinijuego()
     {
-        "¡Lo conseguiste, " + nombre + "! 😊",
-        "Ahora estas ideas ya no son solamente palabras.",
-        "Las llevaste a la práctica.",
-        "Y eso hace que este lugar deje de ser un eco...",
-        "Para convertirse en un verdadero cambio.",
-        "¡Aún queda una puerta más por descubrir! 😊"
-    };
+        indice = 0;
+        mostrandoRespuesta = true;
+        introduccionMinijuego = true;
+        dialogoPostMinijuego = true;
+        aplausoHecho = false;
 
-    panelDialogo.SetActive(true);
-    MostrarDialogoActual();
-}
+        string nombre = PlayerPrefs.GetString("NombreJugador", "Explorador");
+
+        dialogos = new string[]
+        {
+            "¡Lo conseguiste, " + nombre + "! 😊",
+            "Ahora estas ideas ya no son solamente palabras.",
+            "Las llevaste a la práctica.",
+            "Y eso hace que este lugar deje de ser un eco...",
+            "Para convertirse en un verdadero cambio.",
+            "¡Aún queda una puerta más por descubrir! 😊"
+        };
+
+        panelDialogo.SetActive(true);
+        MostrarDialogoActual();
+    }
 
     void MostrarDialogoActual()
     {
@@ -125,19 +127,19 @@ public class DialogoEcoCambio : MonoBehaviour
         textoCompletoActual = texto;
 
         if (avatarAnimator != null)
-{
-    if (dialogoPostMinijuego && !aplausoHecho)
-    {
-        aplausoHecho = true;
-        avatarAnimator.CrossFade("Clapping", 0.08f);
-        yield return new WaitForSeconds(0.8f);
-        avatarAnimator.SetBool("Hablando", true);
-    }
-    else
-    {
-        avatarAnimator.SetBool("Hablando", true);
-    }
-}
+        {
+            if (dialogoPostMinijuego && !aplausoHecho)
+            {
+                aplausoHecho = true;
+                avatarAnimator.CrossFade("Clapping", 0.08f);
+                yield return new WaitForSeconds(0.8f);
+                avatarAnimator.SetBool("Hablando", true);
+            }
+            else
+            {
+                avatarAnimator.SetBool("Hablando", true);
+            }
+        }
         textoDialogo.text = "";
 
         foreach (char letra in texto)
@@ -196,10 +198,13 @@ public class DialogoEcoCambio : MonoBehaviour
 
             return;
         }
+
         if (!mostrandoRespuesta)
         {
             panelDialogo.SetActive(false);
             panelRespuestas.SetActive(true);
+            if (botonConfirmar != null)
+                botonConfirmar.SetActive(false);   // 👈 NUEVO
         }
         else if (!introduccionMinijuego)
         {
@@ -223,7 +228,7 @@ public class DialogoEcoCambio : MonoBehaviour
             if (panelIntroduccion != null)
                 StartCoroutine(FadeInPanel(panelIntroduccion));
         }
-        }
+    }
 
     public void ContinuarRecorrido()
     {
@@ -318,6 +323,9 @@ public class DialogoEcoCambio : MonoBehaviour
         respuestaSeleccionada = opcion;
         check2_1.SetActive(opcion == 1);
         check2_2.SetActive(opcion == 2);
+
+        if (botonConfirmar != null)
+            botonConfirmar.SetActive(true);   // 👈 NUEVO
     }
 
     public void ConfirmarRespuesta()

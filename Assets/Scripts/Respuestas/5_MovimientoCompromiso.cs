@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 
 public class MovimientoCompromiso : MonoBehaviour
 {
@@ -28,6 +29,15 @@ public class MovimientoCompromiso : MonoBehaviour
     [Header("Fade durante el recorrido")]
     public Image panelFade;
 
+    [Header("Puertas")]
+    public GameObject puertaCerrada;
+    public GameObject puertaAbierta;
+
+    [Header("Estado Restaurado")]
+    public Transform puntoAvatarPost;
+    public Transform puntoJugadorPost;
+    public Transform puntoCamaraPost;
+
     [Header("Movimiento")]
     public float velocidad = 2f;
     public float velocidadGiro = 240f;
@@ -45,6 +55,66 @@ public class MovimientoCompromiso : MonoBehaviour
 
         if (panelFade != null)
             panelFade.gameObject.SetActive(false);
+
+        // Restaurar estado si ya completamos el minijuego de Compromiso
+        if (PlayerPrefs.GetInt("EstadoCompromiso", 0) == 1)
+        {
+            RestaurarEstadoCompromiso();
+            StartCoroutine(MostrarDialogoDespues());
+        }
+    }
+
+    IEnumerator MostrarDialogoDespues()
+    {
+        // Espera 3 frames para que todos los Start() de la escena hayan terminado de apagar sus paneles
+        yield return null;
+        yield return null;
+        yield return null;
+
+        if (dialogoCompromiso != null)
+            dialogoCompromiso.DialogoDespuesDelMinijuego();
+    }
+
+    void RestaurarEstadoCompromiso()
+    {
+        mover = false;
+        girando = false;
+
+        // Abrir la puerta físicamente
+        if (puertaCerrada != null) puertaCerrada.SetActive(false);
+        if (puertaAbierta != null) puertaAbierta.SetActive(true);
+
+        // Reposicionar el avatar clínico en su destino post-juego
+        if (avatarClinico != null && puntoAvatarPost != null)
+        {
+            avatarClinico.position = puntoAvatarPost.position;
+            avatarClinico.rotation = puntoAvatarPost.rotation;
+        }
+
+        // Reposicionar el jugador activo en su destino post-juego
+        if (jugadorActivo != null && puntoJugadorPost != null)
+        {
+            jugadorActivo.transform.position = puntoJugadorPost.position;
+            jugadorActivo.transform.rotation = puntoJugadorPost.rotation;
+            jugadorActivo.transform.Rotate(0f, 180f, 0f);
+        }
+
+        // Reposicionar la cámara en su destino post-juego
+        if (camaraPrincipal != null && puntoCamaraPost != null)
+        {
+            camaraPrincipal.transform.position = puntoCamaraPost.position;
+            camaraPrincipal.transform.rotation = puntoCamaraPost.rotation;
+        }
+
+        // Configurar animaciones de Idle
+        if (animAvatar != null)
+            animAvatar.Play("Fishing Idle");
+
+        if (animJugador != null)
+        {
+            animJugador.SetBool("Walking", false);
+            animJugador.Play("Happy Idle");
+        }
     }
 
     public void IniciarRecorrido()

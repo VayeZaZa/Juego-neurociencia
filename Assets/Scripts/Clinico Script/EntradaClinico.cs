@@ -20,13 +20,17 @@ public class EntradaClinico : MonoBehaviour
 
     void Start()
     {
-        // SI VOLVEMOS DEL MINIJUEGO
+        // SI VOLVEMOS DE CUALQUIER MINIJUEGO
         if (PlayerPrefs.GetInt("EstadoRetirada", 0) == 1)
         {
-            if (puntoRetorno != null)
+            // Solo lo colocamos en el punto de retorno de Retirada si NO hemos completado las siguientes puertas
+            if (PlayerPrefs.GetInt("EstadoEcoCambio", 0) == 0 && PlayerPrefs.GetInt("EstadoCompromiso", 0) == 0)
             {
-                transform.position = puntoRetorno.position;
-                transform.rotation = puntoRetorno.rotation;
+                if (puntoRetorno != null)
+                {
+                    transform.position = puntoRetorno.position;
+                    transform.rotation = puntoRetorno.rotation;
+                }
             }
 
             animator.CrossFade("Fishing Idle", 0.2f);

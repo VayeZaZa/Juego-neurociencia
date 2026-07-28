@@ -65,7 +65,8 @@ public class MovimientoEcoCambio : MonoBehaviour
         if (jugadorActivo != null)
             animJugador = jugadorActivo.GetComponent<Animator>();
 
-        if (PlayerPrefs.GetInt("EstadoEcoCambio", 0) == 1)
+        if (PlayerPrefs.GetInt("EstadoEcoCambio", 0) == 1 &&
+            PlayerPrefs.GetInt("EstadoCompromiso", 0) == 0)
         {
             RestaurarEstadoEcoCambio();
             StartCoroutine(MostrarDialogoDespues());

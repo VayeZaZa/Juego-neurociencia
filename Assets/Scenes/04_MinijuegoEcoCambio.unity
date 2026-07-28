@@ -2960,7 +2960,7 @@ MonoBehaviour:
   panelGanar: {fileID: 1671569007}
   fadeEntrada: {fileID: 19484406}
   fadeSalida: {fileID: 1843914963}
-  duracionFade: 1.5
+  duracionFade: 1
   flotacionAmplitud: 6
   flotacionVelocidad: 0.2
   flotacionDesfase: 0
