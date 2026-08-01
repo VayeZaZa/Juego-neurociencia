@@ -26,6 +26,11 @@ public class GameManagerEco : MonoBehaviour
 
     [Header("Configuración")]
     public float duracionFade = 0.8f;
+    public float duracionFadeGanar = 0.35f;
+
+    [Header("Sonidos")]
+    public AudioSource audioSourceEfectos;
+    public AudioClip sonidoGanar;
 
     [Header("Flotación de Zonas")]
     public float flotacionAmplitud = 6f;    // píxeles que sube y baja
@@ -197,12 +202,20 @@ public class GameManagerEco : MonoBehaviour
         panelGanar.gameObject.SetActive(true);
         panelGanar.alpha = 0;
 
+        // ============================================
+        // Sonido de victoria (una sola vez)
+        // ============================================
+        if (audioSourceEfectos != null && sonidoGanar != null)
+        {
+            audioSourceEfectos.PlayOneShot(sonidoGanar);
+        }
+
         float t = 0;
 
-        while (t < duracionFade)
+        while (t < duracionFadeGanar)
         {
             t += Time.deltaTime;
-            panelGanar.alpha = Mathf.Lerp(0, 1, t / duracionFade);
+            panelGanar.alpha = Mathf.Lerp(0, 1, t / duracionFadeGanar);
             yield return null;
         }
 

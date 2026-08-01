@@ -47,6 +47,12 @@ public class RespiracionManager : MonoBehaviour
     [Header("Configuración")]
     public float duracionFade = 0.8f;
 
+    [Header("Sonidos")]
+    public AudioSource audioSource;
+    public AudioClip sonidoInhalar;
+    public AudioClip sonidoExhalar;
+    public AudioClip sonidoVictoria;
+
     bool presionando = false;
 
     void Start()
@@ -99,6 +105,9 @@ public class RespiracionManager : MonoBehaviour
             texto.text = "¡PRESIONA!";
             if (barraProgreso != null) barraProgreso.value = 0f;
 
+            if (audioSource != null && sonidoInhalar != null)
+                audioSource.PlayOneShot(sonidoInhalar);
+
             yield return personaje.Subir(tiempoInhala, () => presionando, p =>
             {
                 if (barraProgreso != null) barraProgreso.value = p;
@@ -120,6 +129,9 @@ public class RespiracionManager : MonoBehaviour
 
             while (presionando)
                 yield return null;
+
+            if (audioSource != null && sonidoExhalar != null)
+                audioSource.PlayOneShot(sonidoExhalar);
 
             yield return personaje.Bajar(tiempoExhala, p =>
             {
@@ -253,6 +265,9 @@ public class RespiracionManager : MonoBehaviour
         panelVictoria.gameObject.SetActive(true);
 
         panelVictoria.alpha = 0;
+
+        if (audioSource != null && sonidoVictoria != null)
+            audioSource.PlayOneShot(sonidoVictoria);
 
         float t = 0;
 

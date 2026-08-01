@@ -22,6 +22,9 @@ public class MovimientoSimple : MonoBehaviour
     public PresentacionCapitulo tituloCap;
     public DialogoRetirada dialogoRetirada;
 
+    // Canción que sonará al empezar a caminar
+    public AudioClip musicaCaminata;
+
     public float velocidad = 2f;
     public float velocidadGiro = 120f;
 
@@ -66,6 +69,14 @@ public class MovimientoSimple : MonoBehaviour
 
         mover = true;
         girando = false;
+
+        // ============================================
+        // Cambiar música al iniciar la caminata
+        // ============================================
+        if (MusicManager.Instance != null && musicaCaminata != null)
+        {
+            MusicManager.Instance.CambiarMusica(musicaCaminata);
+        }
 
         if (tituloCap != null)
         {

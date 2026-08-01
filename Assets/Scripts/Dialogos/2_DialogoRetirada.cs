@@ -53,12 +53,10 @@ public class DialogoRetirada : MonoBehaviour
         dialogos = new string[]
         {
             "Esta es la Puerta de la Retirada.",
-            "No es debilidad llegar hasta aquí... Muchas veces es cansancio.",
-            "Cansancio de buscar respuestas.",
-            "De cargar con algo que no parece terminar.",
-            "Pero detrás de ese cansancio...",
-            "Suele haber algo más.",
-            "Una emoción que ha estado presente durante el camino.",
+            "Llegar hasta aquí no tiene nada de malo.",
+             "A veces, el dolor hace que queramos detenernos.",
+            "Y eso puede ser muy agotador.",
+            "Junto al dolor también pueden aparecer muchas emociones.",
             "¿Cuál sientes que ha sido la emoción más presente?"
         };
 
@@ -289,14 +287,14 @@ public class DialogoRetirada : MonoBehaviour
             respuestaPersonalizada = new string[]
             {
                 "Alejarse también es una manera de intentar cuidarse.",
-                "Y a pesar de eso, sigues adelante. 😊"
+                "Y así podemos seguir adelante. 😊"
             };
         }
         else if (respuestaSeleccionada2 == 2)
         {
             respuestaPersonalizada = new string[]
             {
-                "No siempre es fácil responder algo así.",
+                "No es fácil responder algo así.",
                 "Lo importante es que hoy decidiste dar el paso. 😊"
             };
         }
@@ -304,7 +302,7 @@ public class DialogoRetirada : MonoBehaviour
         {
             respuestaPersonalizada = new string[]
             {
-                "Esa fortaleza también tiene su historia detrás.",
+                "Tu fortaleza también tiene una historia.",
                 "Y merece ser reconocida. 😊"
             };
         }
@@ -313,7 +311,7 @@ public class DialogoRetirada : MonoBehaviour
         {
             respuestaPersonalizada[0],
             respuestaPersonalizada[1],
-            "No voy a prometerte magia... Pero quiero mostrarte algo distinto.",
+            "No voy a prometerte magia... Pero quiero mostrarte algo diferente.",
             "Detrás de esta puerta encontraremos pensamientos.",
             "Los que aparecen justo cuando queremos retirarnos.",
             "No vamos a luchar contra ellos.",

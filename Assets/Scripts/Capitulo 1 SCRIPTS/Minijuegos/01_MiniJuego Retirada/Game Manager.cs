@@ -24,6 +24,10 @@ public class GameManager : MonoBehaviour
     public float velocidadFadeOut = 1.5f;
     public float velocidadFadeIn = 1.5f;
 
+    [Header("Sonido de Victoria")]
+    public AudioSource audioSourceEfectos;
+    public AudioClip sonidoGanar;
+
     private int nubesExplotadas = 0;
     private int totalNubes = 6;
 
@@ -114,6 +118,14 @@ public class GameManager : MonoBehaviour
     IEnumerator AnimacionVictoria()
     {
         panelGanar.SetActive(true);
+
+        // ============================================
+        // Reproducir sonido de victoria (una sola vez)
+        // ============================================
+        if (audioSourceEfectos != null && sonidoGanar != null)
+        {
+            audioSourceEfectos.PlayOneShot(sonidoGanar);
+        }
 
         CanvasGroup cgGanar = panelGanarGroup;
         cgGanar.alpha = 0f;

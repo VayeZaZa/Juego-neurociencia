@@ -46,6 +46,12 @@ public class CinematicaFinal : MonoBehaviour
     public float esperaAntesDelCambioCamara = 0.3f;
     public float duracionBaile = 3f;
 
+    [Header("Sonidos Finales")]
+    public AudioSource audioSource;
+    public AudioClip sonidoCinematica;
+    public AudioClip sonidoPopLogro;
+    public AudioClip musicaMenu;
+
     private CanvasGroup canvasPanel;
 
     void Start()
@@ -144,6 +150,10 @@ public class CinematicaFinal : MonoBehaviour
 
     public void Iniciar()
     {
+        if (audioSource != null && sonidoCinematica != null)
+        {
+            audioSource.PlayOneShot(sonidoCinematica);
+        }
         StartCoroutine(SecuenciaFinal());
     }
 
@@ -228,7 +238,7 @@ public class CinematicaFinal : MonoBehaviour
         foreach (RectTransform logro in logros)
         {
             if (logro != null)
-                yield return StartCoroutine(PopIn(logro, duracionPopLogro));
+                yield return StartCoroutine(FadeInSuave(logro, duracionPopLogro));
 
             yield return new WaitForSeconds(pausaEntreLogros);
         }
@@ -265,6 +275,11 @@ public class CinematicaFinal : MonoBehaviour
     // Animación tipo "pop" con rebote: crece pasando de 0 a un poco más grande y se asienta en 1
     IEnumerator PopIn(RectTransform objeto, float duracion)
     {
+        if (audioSource != null && sonidoPopLogro != null)
+        {
+            audioSource.PlayOneShot(sonidoPopLogro);
+        }
+
         objeto.gameObject.SetActive(true);
         objeto.localScale = Vector3.zero;
 
@@ -291,6 +306,36 @@ public class CinematicaFinal : MonoBehaviour
         }
 
         objeto.localScale = Vector3.one;
+    }
+
+    // Animación de fade-in suave para logros
+    IEnumerator FadeInSuave(RectTransform objeto, float duracion)
+    {
+        if (audioSource != null && sonidoPopLogro != null)
+        {
+            audioSource.PlayOneShot(sonidoPopLogro);
+        }
+
+        objeto.gameObject.SetActive(true);
+        objeto.localScale = Vector3.one; // Restaura la escala normal
+
+        CanvasGroup cg = objeto.GetComponent<CanvasGroup>();
+        if (cg == null)
+        {
+            cg = objeto.gameObject.AddComponent<CanvasGroup>();
+        }
+
+        cg.alpha = 0f;
+
+        float t = 0f;
+        while (t < duracion)
+        {
+            t += Time.deltaTime;
+            cg.alpha = Mathf.Clamp01(t / duracion);
+            yield return null;
+        }
+
+        cg.alpha = 1f;
     }
 
     IEnumerator MostrarBotonReiniciar()
@@ -325,6 +370,11 @@ public class CinematicaFinal : MonoBehaviour
     {
         PlayerPrefs.DeleteAll();
         PlayerPrefs.Save();
+
+        if (MusicManager.Instance != null && musicaMenu != null)
+        {
+            MusicManager.Instance.CambiarMusica(musicaMenu);
+        }
 
         SceneManager.LoadScene("00_MenuJuego");
     }

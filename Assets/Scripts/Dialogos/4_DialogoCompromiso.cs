@@ -128,10 +128,10 @@ public class DialogoCompromiso : MonoBehaviour
 
         dialogos = new string[]
         {
-            "Has llegado a la última puerta.",
+            "Llegamos a la última puerta.",
             "Este lugar se llama Compromiso.",
             "Ahora ya no vienes como alguien que busca escapar...",
-            "Vienes como quien decide recuperar el control de su camino.",
+            "Vienes como alguien que decide recuperar el control.",
             "¿Qué quieres hacer ahora?"
         };
 
@@ -348,7 +348,7 @@ public class DialogoCompromiso : MonoBehaviour
             dialogos = new string[]
             {
                 "Has dado el primer paso del compromiso.",
-                "En cada capítulo aprenderás una nueva herramienta. 😊",
+                "Cada día aprenderás una nueva herramienta. 😊",
             };
         }
         else
@@ -563,25 +563,25 @@ public class DialogoCompromiso : MonoBehaviour
             case 1:
                 textoRespuesta =
                     "¿Qué me está ocurriendo?\n\n" +
-                    "El dolor es una señal de protección.\n\n" +
+                    "El dolor es una alarma del cuerpo para protegerse.\n\n" +
                     "No siempre significa que exista un daño nuevo.\n\n" +
-                    "• Antes de preocuparte, pregúntate qué pudo activar esa alarma.";
+                    "• Antes de preocuparte, piensa qué pudo activar esa alarma.";
                 break;
 
             case 2:
                 textoRespuesta =
                     "¿Cómo puede ayudarme esto?\n\n" +
-                    "Comprender el dolor disminuye el miedo.\n\n" +
-                    "Con menos miedo, el cerebro deja de mantenerse tan alerta.\n\n" +
+                    "Entender el dolor ayuda a reducir el miedo.\n\n" +
+                    "Con menos miedo, el cuerpo puede sentirse más tranquilo. \n\n" +
                     "• Evita pensar que todo dolor significa peligro.";
                 break;
 
             case 3:
                 textoRespuesta =
                     "¿Qué hago ahora?\n\n" +
-                    "Haz ejercicios simples poco a poco. \n\n" +
-                    "Cada experiencia segura ayuda al cerebro a confiar otra vez.\n\n" +
-                    "• Avanza gradualmente, sin exigir perfección.";
+                    "Haz los ejercicios indicados por los profesionales. \n\n" +
+                    "Cada experiencia ayuda al cerebro a confiar otra vez.\n\n" +
+                    "• Avanza poco a poco y a tu propio ritmo.";
                 break;
         }
 

@@ -14,6 +14,9 @@ public class ControlDecision : MonoBehaviour
     public TMP_Text textoAbandono;
     public float velocidadEscritura = 0.08f;
 
+    [Header("Música")]
+    public AudioClip musicaMenu;
+
     private string mensajeAbandono = "Puedes salir. Pero si vuelves, el corredor seguirá aquí. Ningún mapa se revela a quien no entra.";
 
     public void Seguir()
@@ -34,6 +37,14 @@ public class ControlDecision : MonoBehaviour
         {
             textoAbandono.gameObject.SetActive(true);
             textoAbandono.text = "";
+        }
+
+        // ============================================
+        // Volver a la música del menú al abandonar
+        // ============================================
+        if (MusicManager.Instance != null && musicaMenu != null)
+        {
+            MusicManager.Instance.CambiarMusica(musicaMenu);
         }
 
         float t = 0f;

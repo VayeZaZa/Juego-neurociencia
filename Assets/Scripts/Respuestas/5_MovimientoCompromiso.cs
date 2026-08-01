@@ -38,6 +38,9 @@ public class MovimientoCompromiso : MonoBehaviour
     public Transform puntoJugadorPost;
     public Transform puntoCamaraPost;
 
+    [Header("Música")]
+    public AudioClip musicaMovimiento;
+
     [Header("Movimiento")]
     public float velocidad = 2f;
     public float velocidadGiro = 240f;
@@ -122,6 +125,14 @@ public class MovimientoCompromiso : MonoBehaviour
         Debug.Log("Comienza el recorrido hacia Compromiso.");
 
         mover = true;
+
+        // ============================================
+        // Música al iniciar el recorrido hacia Compromiso
+        // ============================================
+        if (MusicManager.Instance != null && musicaMovimiento != null)
+        {
+            MusicManager.Instance.CambiarMusica(musicaMovimiento);
+        }
 
         if (panelFade != null)
             panelFade.gameObject.SetActive(true);

@@ -5,6 +5,9 @@ public class IntroJugador : MonoBehaviour
 {
     public Animator animator;
 
+    // Canción que sonará en este capítulo
+    public AudioClip musicaCapitulo;
+
     // Flag to allow skipping the intro cinematic (useful for testing)
     public bool saltarIntro = false;
 
@@ -22,13 +25,36 @@ public class IntroJugador : MonoBehaviour
     public Transform avatarClinico;
     public Transform puntoDialogo;
 
+    // ============================================
+    // Fade de pantalla blanca al entrar a la escena
+    // ============================================
+    [Header("Fade pantalla blanca")]
+    public CanvasGroup fadeBlanco;
+    public float duracionFade = 1.5f;
+
     IEnumerator Start()
     {
+        // ============================================
+        // Cambiar a la música de este capítulo
+        // ============================================
+        if (MusicManager.Instance != null && musicaCapitulo != null)
+        {
+            MusicManager.Instance.CambiarMusica(musicaCapitulo);
+        }
+
         // ============================================
         // SI VOLVEMOS DEL MINIJUEGO
         // ============================================
         if (PlayerPrefs.GetInt("EstadoRetirada", 0) == 1)
         {
+            // Ocultamos el fade blanco inmediatamente para que no aparezca
+            if (fadeBlanco != null)
+            {
+                fadeBlanco.alpha = 0f;
+                fadeBlanco.blocksRaycasts = false;
+                fadeBlanco.gameObject.SetActive(false);
+            }
+
             camaraCinematica.SetActive(false);
             camaraJugador.SetActive(true);
 
@@ -42,6 +68,14 @@ public class IntroJugador : MonoBehaviour
                 uiDialogos.SetActive(false);
 
             yield break;
+        }
+
+        // ============================================
+        // Fade in de pantalla blanca a transparente (Solo en la cinemática inicial)
+        // ============================================
+        if (fadeBlanco != null)
+        {
+            StartCoroutine(FadeDesdeBlanco());
         }
 
         // Ocultar diálogos al iniciar
@@ -107,5 +141,23 @@ public class IntroJugador : MonoBehaviour
         // Mostrar diálogos al terminar la intro
         if (uiDialogos != null)
             uiDialogos.SetActive(true);
+    }
+
+    IEnumerator FadeDesdeBlanco()
+    {
+        fadeBlanco.alpha = 1f;
+        fadeBlanco.blocksRaycasts = true;
+
+        float t = 0;
+
+        while (t < duracionFade)
+        {
+            t += Time.deltaTime;
+            fadeBlanco.alpha = Mathf.Lerp(1f, 0f, t / duracionFade);
+            yield return null;
+        }
+
+        fadeBlanco.alpha = 0f;
+        fadeBlanco.blocksRaycasts = false;
     }
 }

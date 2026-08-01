@@ -55,8 +55,8 @@ void Start()
         "¡Hola, " + nombre + "! 😊",
         "Me alegra mucho que estés aquí.",
         "Soy tu Avatar Clínico.",
-        "Y durante este recorrido estaré contigo para guiarte paso a paso.",
-        "Este es un espacio para comprender mejor lo que ocurre cuando vivimos con dolor.",
+        "Estaré contigo durante este recorrido.",
+        "Juntos conoceremos mejor cómo funciona el dolor.",
         "Estás aquí para explorar y comprender a tu propio ritmo.",
         "Antes de comenzar...",
         "¡Quiero hacerte una pregunta! 😊",
@@ -113,7 +113,7 @@ public void SiguienteDialogo()
             dialogosConvergencia = new string[]
             {
                 "Gracias por compartirlo conmigo, " + nombre + ".",
-                "Cada persona vive el dolor de una manera diferente.",
+                "Cada experiencia con el dolor es personal y única.",
                 "Ahora demos el primer paso juntos.",
                 "Cuando quieras... ¡Sígueme! 😊"
             };
@@ -240,8 +240,8 @@ public void MostrarRespuestaElegida(int opcion)
     {
         dialogosRespuesta = new string[]
         {
-            "Gracias por tu honestidad.",
-            "A veces basta con estar dispuestos a dar un pequeño paso. 😄"
+            "A veces basta con dar un pequeño paso.",
+            "Demos este primer paso juntos. 😊"
         };
     }
     else if (opcion == 2)
@@ -250,16 +250,15 @@ public void MostrarRespuestaElegida(int opcion)
         {
             "Es normal tener dudas.",
             "Muchas personas llegan aquí sintiéndose igual.",
-            "Solo te voy a pedir que me acompañes un momento y exploremos juntos. 😄"
+            "Vamos a descubrir esto paso a paso. 😊"
         };
     }
     else if (opcion == 3)
     {
         dialogosRespuesta = new string[]
         {
-            "Esa curiosidad puede convertirse en una herramienta muy valiosa.",
-            "Entender el dolor no lo hace desaparecer de inmediato.",
-            "Pero SÍ puede cambiar la forma en que lo vives. 😄"
+            "¡Qué bueno que tengas curiosidad!",
+            "Comprender el dolor puede ayudarte a enfrentarlo de una manera diferente. 😊",
         };
     }
 

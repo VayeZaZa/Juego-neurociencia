@@ -45,10 +45,10 @@ public class DialogoEcoCambio : MonoBehaviour
         dialogos = new string[]
         {
             "Este lugar se llama Eco sin Cambio.",
-            "Aquí muchas personas asienten con la cabeza.",
-            "Entienden muchas cosas... pero no dan el siguiente paso.",
+            "Aquí muchas personas aprenden cosas nuevas.",
+            "Pero siguen haciendo lo mismo sin aplicar lo aprendido.",
             "Una idea solo cobra vida cuando cambia algo en ti.",
-            "¿Qué piensas cuando escuchas eso?"
+            "¿Qué piensas de esa frase?"
         };
 
         panelDialogo.SetActive(false);
@@ -79,10 +79,10 @@ public class DialogoEcoCambio : MonoBehaviour
         dialogos = new string[]
         {
             "Este lugar se llama Eco sin Cambio.",
-            "Aquí muchas personas asienten con la cabeza.",
-            "Entienden muchas cosas... pero no dan el siguiente paso.",
+            "Aquí muchas personas aprenden cosas nuevas.",
+            "Pero siguen haciendo lo mismo sin aplicar lo aprendido.",
             "Una idea solo cobra vida cuando cambia algo en ti.",
-            "¿Qué piensas cuando escuchas eso?"
+            "¿Qué piensas de esa frase?"
         };
 
         panelDialogo.SetActive(true);
@@ -215,7 +215,7 @@ public class DialogoEcoCambio : MonoBehaviour
             {
                 "A veces la diferencia entre comprender y aplicar es muy pequeña.",
                 "Vamos a descubrirla juntos. 😊",
-                "Esta puerta te presentará diferentes situaciones.",
+                "Esta puerta te presentará distintas situaciones.",
                 "En cada una, solo tendrás que decidir si representan 'Lo entiendo'... o 'Lo aplico'."
             };
 
@@ -343,7 +343,7 @@ public class DialogoEcoCambio : MonoBehaviour
                 "Tiene sentido, ¿verdad? 😊",
                 "Comprender algo ya es un paso importante.",
                 "Pero cuando nos quedamos únicamente con la idea...",
-                "El lugar permanece exactamente igual.",
+                "Todo se queda exactamente igual.",
             };
         }
         else

@@ -11,6 +11,10 @@ public class CorazonController : MonoBehaviour
     public float velocidadLatido = 1.0f;
     public float intensidadLatido = 0.1f;
 
+    [Header("Sonido")]
+    public AudioSource audioSourceEfectos;
+    public AudioClip sonidoPop;
+
     private Image img;
     private Vector3 escalaOriginal;
 
@@ -23,6 +27,14 @@ public class CorazonController : MonoBehaviour
 
     void OnEnable()
     {
+        // ============================================
+        // Sonido de pop al aparecer el corazón (click en la nube)
+        // ============================================
+        if (audioSourceEfectos != null && sonidoPop != null)
+        {
+            audioSourceEfectos.PlayOneShot(sonidoPop);
+        }
+
         StartCoroutine(FadeIn());
     }
 

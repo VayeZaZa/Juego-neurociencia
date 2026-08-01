@@ -19,6 +19,10 @@ public class TarjetaEco : MonoBehaviour,
     public float palpitacionIntensidad = 0.02f;  // qué tanto crece (4%)
     public float palpitacionVelocidad  = 0.2f;   // latidos por segundo
 
+    [Header("Sonido")]
+    public AudioSource audioSourceEfectos;
+    public AudioClip sonidoPop;
+
     private RectTransform rectTransform;
     private CanvasGroup canvasGroup;
     private Canvas canvas;
@@ -162,5 +166,13 @@ public class TarjetaEco : MonoBehaviour,
         }
 
         rectTransform.localScale = escalaDestino;
+
+        // ============================================
+        // Sonido pop al quedar la tarjeta estática en su lugar
+        // ============================================
+        if (audioSourceEfectos != null && sonidoPop != null)
+        {
+            audioSourceEfectos.PlayOneShot(sonidoPop);
+        }
     }
 }

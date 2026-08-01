@@ -45,6 +45,9 @@ public class MovimientoEcoCambio : MonoBehaviour
     public Image fadeInicial;
     public float duracionFade = 1f;
 
+    [Header("Música")]
+    public AudioClip musicaEcoCambio;
+
     [Header("Movimiento")]
     public float velocidad = 2f;
     public float velocidadGiro = 120f;
@@ -158,6 +161,14 @@ public class MovimientoEcoCambio : MonoBehaviour
 
         mover = true;
         girando = false;
+
+        // ============================================
+        // Cambiar música al iniciar la caminata hacia Eco del Cambio
+        // ============================================
+        if (MusicManager.Instance != null && musicaEcoCambio != null)
+        {
+            MusicManager.Instance.CambiarMusica(musicaEcoCambio);
+        }
 
         if (tituloCap != null)
         {

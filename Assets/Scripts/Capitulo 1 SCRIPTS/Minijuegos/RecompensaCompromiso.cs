@@ -47,6 +47,10 @@ public class RecompensaCompromiso : MonoBehaviour
     [Tooltip("Velocidad de respuesta del Lerp")]
     public float suavizadoPulso = 8f;
 
+    [Header("Sonido Recompensa")]
+    public AudioSource audioSource;
+    public AudioClip sonidoBrujula;
+
     private bool flotando = false;
     private bool pulsandoBoton = false;
     private Vector3 posicionFinal;
@@ -84,6 +88,11 @@ public class RecompensaCompromiso : MonoBehaviour
 
     public void MostrarRecompensa()
     {
+        if (audioSource != null && sonidoBrujula != null)
+        {
+            audioSource.PlayOneShot(sonidoBrujula);
+        }
+
         if (avatarAnimator != null)
             avatarAnimator.CrossFade("Clapping", 0.08f);
 
