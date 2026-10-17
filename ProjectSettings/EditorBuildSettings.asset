@@ -23,6 +23,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/05_MinijuegoCompromiso.unity
     guid: bdcd9bc476dbe9c45b04da4a85041e22
+  - enabled: 1
+    path: Assets/Scenes/07_Capitulo_2.unity
+    guid: f1fbaac70e934814e88ac1188a383e3a
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0
